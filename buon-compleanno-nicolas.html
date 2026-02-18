@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Un biglietto di auguri speciale per il compleanno di Nicolas.">
+    <meta name="author" content="Friend">
+    <meta name="theme-color" content="#6a11cb">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Buon Compleanno Nicolas!">
+    <meta property="og:description" content="Tanti auguri di buon compleanno con una sorpresa speciale.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com/buon-compleanno-nicolas">
+    <meta property="og:image" content="https://example.com/birthday-card-preview.jpg">
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Biglietto di Auguri per Nicolas",
+      "author": {
+        "@type": "Person",
+        "name": "Friend"
+      },
+      "datePublished": "2024-01-01",
+      "description": "Un biglietto di auguri digitale interattivo."
+    }
+    </script>
+
+    <title>Buon Compleanno Nicolas 🎉</title>
+
+    <style>
+        /* 
+         * CSS Custom Properties & Reset 
+         */
+        :root {
+            --primary-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            --surprise-gradient: linear-gradient(-45deg, #ff9a9e, #fecfef, #feada6, #f5efef);
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 255, 255, 0.2);
+            --shadow-lg: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+        }
+
+        /* Accessibility & Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--primary-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            body { animation: none; background-position: 0% 50%; }
+            * { transition: none !important; animation: none !important; }
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Main Container */
+        .card-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: clamp(var(--spacing-md), 5vw, var(--spacing-lg));
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUpFade 1.2s var(--transition-bounce) forwards;
+            contain: content;
+            z-index: 20;
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: textPop 1s ease-out 0.5s backwards;
+        }
+
+        @keyframes textPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .editable-message {
+            font-size: clamp(1.1rem, 2vw + 0.5rem, 1.5rem);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-sm);
+            border: 1px dashed transparent;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            outline: none;
+        }
+
+        .editable-message:focus {
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Blockquote */
+        blockquote {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin: var(--spacing-md) auto;
+            max-width: 600px;
+            position: relative;
+            padding: 0 var(--spacing-md);
+            min-height: 3em; /* Reserve space */
+        }
+
+        blockquote::before, blockquote::after {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            opacity: 0.6;
+            font-family: Georgia, serif;
+        }
+
+        blockquote::before { top: -1rem; left: 0; }
+        blockquote::after { bottom: -2rem; right: 0; }
+
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Interactive Button */
+        .surprise-btn {
+            background: #ffffff;
+            color: #e73c7e;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s var(--transition-bounce), box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--spacing-md);
+            touch-action: manipulation;
+            min-width: 200px;
+            min-height: 44px; /* Accessibility touch target */
+        }
+
+        .surprise-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .surprise-btn:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(231, 60, 126, 0.3);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* Surprise Elements */
+        .emoji-surprise {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 8rem;
+            pointer-events: none;
+            z-index: 100;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+            transition: transform 0.5s var(--transition-bounce);
+        }
+
+        .emoji-surprise.show {
+            transform: translate(-50%, -50%) scale(1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -60%) scale(1.1); }
+        }
+
+        /* Accessibility: Sr-only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+    <!-- Main Card -->
+    <main class="card-container" role="main">
+        <header>
+            <h1 id="main-title">Buon Compleanno Nicolas!</h1>
+        </header>
+
+        <section aria-labelledby="message-label">
+            <span id="message-label" class="sr-only">Messaggio di auguri modificabile</span>
+            <div 
+                id="greeting-msg" 
+                class="editable-message" 
+                contenteditable="true" 
+                spellcheck="false"
+                role="textbox"
+                aria-multiline="true"
+                aria-label="Scrivi il tuo messaggio di auguri qui">
+                Che questo giorno sia l'inizio di un anno pieno di felicità, successi e momenti indimenticabili. Goditi ogni istante!
+            </div>
+        </section>
+
+        <figure>
+            <blockquote id="quote-container" aria-live="polite">
+                <span id="quote-text"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+            </blockquote>
+            <figcaption class="sr-only">Citazione ispiratrice</figcaption>
+        </figure>
+
+        <footer>
+            <button id="surprise-btn" class="surprise-btn" aria-label="Clicca per una sorpresa speciale">
+                Clicca per una sorpresa 🎁
+            </button>
+        </footer>
+    </main>
+
+    <!-- Hidden Surprise Element -->
+    <div id="emoji-surprise" class="emoji-surprise" aria-hidden="true">🎂</div>
+
+    <script>
+        /**
+         * Logic: Confetti, Typewriter, LocalStorage, Audio, Interaction
+         */
+        
+        // --- Configuration ---
+        const CONFIG = {
+            confettiCount: 60,
+            confettiColors: ['#ff9a9e', '#fecfef', '#feada6', '#f5efef', '#a1c4fd', '#c2e9fb', '#fbc2eb', '#a6c1ee'],
+            gravity: 0.5,
+            drag: 0.075,
+            terminalVelocity: 5,
+            quote: "Non contare gli anni, ma la vita che metti in quegli anni. Il meglio deve ancora venire.",
+            audioNotes: [ // Simple "Happy Birthday" melody (approximate frequencies)
+                {freq: 261.63, dur: 0.3}, {freq: 261.63, dur: 0.1}, {freq: 293.66, dur: 0.4}, {freq: 261.63, dur: 0.4}, {freq: 349.23, dur: 0.4}, {freq: 329.63, dur: 0.8},
+                {freq: 261.63, dur: 0.3}, {freq: 261.63, dur: 0.1}, {freq: 293.66, dur: 0.4}, {freq: 261.63, dur: 0.4}, {freq: 392.00, dur: 0.4}, {freq: 349.23, dur: 0.8}
+            ]
+        };
+
+        // --- DOM Elements ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        const quoteText = document.getElementById('quote-text');
+        const greetingMsg = document.getElementById('greeting-msg');
+        const surpriseBtn = document.getElementById('surprise-btn');
+        const emojiEl = document.getElementById('emoji-surprise');
+        const body = document.body;
+
+        // --- LocalStorage for Message ---
+        const STORAGE_KEY = 'nicolas_birthday_msg_v1';
+        
+        function loadMessage() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                greetingMsg.innerText = saved;
+            }
+        }
+
+        function saveMessage() {
+            localStorage.setItem(STORAGE_KEY, greetingMsg.innerText);
+        }
+
+        greetingMsg.addEventListener('input', saveMessage);
+        
+        // --- Typewriter Effect ---
+        function typeWriter(text, element, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    document.querySelector('.typewriter-cursor').style.display = 'none';
+                }
+            }
+            type();
+        }
+
+        // --- Confetti System ---
+        let particles = [];
+        let animationId;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let isFadingOut = false;
+
+        class Particle {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.color = CONFIG.confettiColors[Math.floor(Math.random() * CONFIG.confettiColors.length)];
+                this.size = Math.random() * 5 + 5;
+                this.speedY = Math.random() * 3 + 2;
+                this.speedX = Math.random() * 2 - 1;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotationSpeed;
+                
+                // Physics approximation
+                this.speedY += CONFIG.gravity * 0.1; // mild gravity accel
+                if (this.speedY > CONFIG.terminalVelocity) this.speedY = CONFIG.terminalVelocity;
+
+                // Reset if out of view
+                if (this.y > height) {
+                    if (!isFadingOut) {
+                        this.init();
+                        this.y = -20; // restart just above
+                    }
+                }
+            }
+
+            draw() {
+                // Only draw if within visible area (plus margin)
+                if (this.y < height + 50 && this.y > -50) {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                    ctx.restore();
+                }
+            }
+        }
+
+        function initConfetti() {
+            canvas.width = width;
+            canvas.height = height;
+            particles = [];
+            isFadingOut = false;
+            for(let i = 0; i < CONFIG.confettiCount; i++) {
+                particles.push(new Particle());
+            }
+            animateConfetti();
+            
+            // Fade out after 15s
+            setTimeout(() => {
+                isFadingOut = true;
+            }, 15000);
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Filter out particles that have fallen off screen during fade out
+            if (isFadingOut) {
+                particles = particles.filter(p => p.y < height + 50);
+                if (particles.length === 0) {
+                    cancelAnimationFrame(animationId);
+                    return;
+                }
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            animationId = requestAnimationFrame(animateConfetti);
+        }
+
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        });
+
+        // --- Audio System (Web Audio API) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playNote(freq, duration, time) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start(time);
+            
+            // Envelope to avoid clicking
+            gain.gain.setValueAtTime(0, time);
+            gain.gain.linearRampToValueAtTime(0.3, time + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+            
+            osc.stop(time + duration);
+        }
+
+        function playSong() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            let currentTime = audioCtx.currentTime;
+            CONFIG.audioNotes.forEach(note => {
+                playNote(note.freq, note.dur, currentTime);
+                currentTime += note.dur + 0.1; // small gap
+            });
+        }
+
+        // --- Interaction Handler ---
+        function triggerSurprise(e) {
+            // 1. Ripple Effect
+            const rect = surpriseBtn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            surpriseBtn.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+
+            // 2. Change Background
+            body.style.backgroundImage = 'var(--surprise-gradient)';
+            
+            // 3. Show Emoji
+            emojiEl.classList.add('show');
+            
+            // 4. Play Audio
+            playSong();
+
+            // Disable button to prevent spamming
+            surpriseBtn.disabled = true;
+            surpriseBtn.textContent = "Auguri! 🥳";
+            
+            // Reset slightly after song ends (approx 6s)
+            setTimeout(() => {
+                body.style.backgroundImage = '';
+                emojiEl.classList.remove('show');
+                surpriseBtn.disabled = false;
+                surpriseBtn.textContent = "Clicca per una sorpresa 🎁";
+            }, 8000);
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMessage();
+            
+            // Delay typewriter slightly for effect
+            setTimeout(() => {
+                typeWriter(CONFIG.quote, quoteText);
+            }, 1500);
+
+            // Start confetti
+            initConfetti();
+
+            // Bind events
+            surpriseBtn.addEventListener('click', triggerSurprise);
+        });
+
+    </script>
+</body>
+</html>
